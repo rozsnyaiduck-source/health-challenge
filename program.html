@@ -1,51 +1,67 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>30 Napos Kihívás | Program</title>
-    <style>
-        :root { --bg: #05050a; --accent: #00d2ff; --pink: #ff2a5f; }
-        body { background: var(--bg); color: white; font-family: sans-serif; padding: 20px; line-height: 1.6; }
-        .container { max-width: 500px; margin: 0 auto; }
-        h1 { color: var(--accent); font-size: 2rem; margin-bottom: 10px; text-align: center; }
-        .card { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid rgba(0,210,255,0.2); }
-        .day-box { border-left: 4px solid var(--pink); padding-left: 15px; margin: 15px 0; }
-        .price { font-size: 2.5rem; font-weight: bold; text-align: center; margin: 30px 0; color: #fff; }
-        .btn { display: block; background: var(--pink); color: white; text-align: center; padding: 20px; border-radius: 15px; text-decoration: none; font-weight: bold; font-size: 1.2rem; box-shadow: 0 0 20px rgba(255, 42, 95, 0.4); }
-        ul { list-style: none; padding: 0; }
-        li { margin-bottom: 10px; display: flex; align-items: center; }
-        li::before { content: "✓"; color: var(--accent); margin-right: 10px; font-weight: bold; }
-    </style>
+    <title>Program Details | 30 Day Challenge</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>30 Napos Agyegészség Kihívás</h1>
-        <p style="text-align: center; color: #a0a0bd; margin-bottom: 30px;">Fejleszd az agyad és a tested tudományos alapú szokásokkal.</p>
+    <div class="bio-background"></div>
 
-        <div class="card">
-            <h3>Amit kapsz:</h3>
-            <ul>
-                <li>30 napi étkezési javaslat</li>
-                <li>Érthető tudományos magyarázatok</li>
-                <li>Napi életmód kihívások</li>
-                <li>Hosszú távú agyserkentő szokások</li>
-            </ul>
-        </div>
+    <main class="content-wrapper">
+        <header>
+            <h1 class="glow-text">30 Day Eat For Your Organs Challenge</h1>
+            <p>Targeted nutrition for peak biological performance.</p>
+        </header>
 
-        <div class="card">
-            <h3>Példa egy napra:</h3>
-            <div class="day-box">
-                <strong>8. Nap – Étel: Dió</strong>
-                <p>Az Omega-3 zsírsavak segítik a neuronok közötti kommunikációt.</p>
-                <small>Kihívás: Cseréld a délutáni nasit egy marék dióra.</small>
+        <section class="weeks-grid">
+            <div class="week-card">
+                <h3>Week 1</h3>
+                <h4>Brain Optimization</h4>
+                <p>Improve focus, memory, and neuron health.</p>
             </div>
-        </div>
+            <div class="week-card">
+                <h3>Week 2</h3>
+                <h4>Heart & Vessels</h4>
+                <p>Support circulation and arterial protection.</p>
+            </div>
+            <div class="week-card">
+                <h3>Week 3</h3>
+                <h4>Lungs & Energy</h4>
+                <p>Reduce oxidative stress and boost O₂ efficiency.</p>
+            </div>
+            <div class="week-card">
+                <h3>Week 4</h3>
+                <h4>Hormones & Recovery</h4>
+                <p>Improve sleep and metabolic balance.</p>
+            </div>
+        </section>
 
-        <div class="price">4.990 Ft</div>
+        <section class="features">
+            <h2>WHAT YOU GET</h2>
+            <ul>
+                <li>🧬 30 days of science-based meal guidance</li>
+                <li>🍎 Daily food recommendations for specific organs</li>
+                <li>🔬 Simple biological explanations</li>
+                <li>⚡ Daily habit-stacking challenges</li>
+            </ul>
+        </section>
 
-        <a href="thankyou.html" class="btn">Kihívás Indítása</a>
-        <p style="text-align: center; font-size: 0.8rem; color: #555; margin-top: 15px;">Biztonságos fizetés & azonnali hozzáférés</p>
-    </div>
+        <section class="example-day">
+            <div class="glass-card">
+                <span class="tag">Example Day: Brain Week</span>
+                <div class="meal"><strong>Breakfast:</strong> Eggs + Avocado (Choline for memory)</div>
+                <div class="meal"><strong>Lunch:</strong> Salmon + Quinoa (Omega-3 for neurons)</div>
+                <div class="meal"><strong>Snack:</strong> Blueberries (Anthocyanins for stress)</div>
+                <div class="meal"><strong>Dinner:</strong> Spinach & Walnuts (Folate for nerves)</div>
+            </div>
+        </section>
+
+        <section class="pricing">
+            <div class="price-tag">4,990 Ft</div>
+            <a href="thankyou.html" class="btn-main glow-btn">Start the Challenge</a>
+        </section>
+    </main>
 </body>
 </html>

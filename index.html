@@ -1,138 +1,37 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Egészség Teszt | Belső Világ</title>
-    <style>
-        :root {
-            --bg: #05050a;
-            --accent: #ff2a5f;
-            --glow: #00d2ff;
-            --glass: rgba(255, 255, 255, 0.05);
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg); color: white; overflow-x: hidden; line-height: 1.6; }
-        
-        /* Háttér animáció */
-        .bg-glow {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #1a1a3a 0%, #05050a 100%);
-            z-index: -1;
-        }
-
-        .container { max-width: 500px; margin: 0 auto; padding: 40px 20px; min-height: 100vh; display: flex; flex-direction: column; }
-        
-        section { display: none; animation: fadeIn 0.5s ease; }
-        section.active { display: flex; flex-direction: column; }
-
-        h1 { font-size: 2.5rem; text-align: center; margin-bottom: 20px; background: linear-gradient(to right, #fff, var(--glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        p.sub { text-align: center; color: #a0a0bd; margin-bottom: 40px; }
-
-        .btn {
-            background: linear-gradient(45deg, var(--accent), #ff5e00);
-            color: white; border: none; padding: 20px; border-radius: 15px;
-            font-size: 1.2rem; font-weight: bold; cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 42, 95, 0.4); transition: 0.3s;
-            text-decoration: none; text-align: center;
-        }
-
-        .option-btn {
-            background: var(--glass); border: 1px solid rgba(255,255,255,0.1);
-            color: white; padding: 18px; margin-bottom: 12px; border-radius: 12px;
-            text-align: left; cursor: pointer; transition: 0.2s; font-size: 1rem;
-        }
-        .option-btn:active { background: var(--glow); color: black; }
-
-        .progress-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.1); margin-bottom: 30px; border-radius: 2px; }
-        .progress-fill { height: 100%; background: var(--glow); width: 0%; transition: 0.3s; }
-
-        #result-card { background: var(--glass); padding: 30px; border-radius: 20px; border: 1px solid var(--glow); text-align: center; }
-        .score-num { font-size: 4rem; font-weight: 800; color: var(--glow); margin: 10px 0; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+    <title>Organ Health Quiz | 30 Day Challenge</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="bg-glow"></div>
-    <div class="container">
-        
-        <section id="hero" class="active">
-            <h1>Mennyire egészséges a tested valójában?</h1>
-            <p class="sub">Végezd el a 2 perces tesztet, és tudd meg, mi történik a felszín alatt.</p>
-            <button class="btn" onclick="startQuiz()">Teszt indítása</button>
+    <div class="bio-background" id="canvas-container"></div>
+    
+    <main class="glass-container">
+        <section id="quiz-intro">
+            <div class="organ-icon-glow">🫀</div>
+            <h1>How Healthy Are Your <span class="glow-text">Organs?</span></h1>
+            <p>Take the 2 minute test and discover what your body might be missing.</p>
+            <button class="btn-main" onclick="startQuiz()">Start the Test</button>
         </section>
 
-        <section id="quiz-section">
-            <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-            <h2 id="question-text" style="margin-bottom: 25px;">Kérdés?</h2>
-            <div id="options" style="display: flex; flex-direction: column;"></div>
-        </section>
-
-        <section id="results">
-            <div id="result-card">
-                <h2>Az eredményed:</h2>
-                <div class="score-num" id="score-display">0</div>
-                <p id="result-msg" style="margin-bottom: 30px;"></p>
-                <a href="program.html" class="btn">30 Napos Agy-Kihívás Indítása</a>
+        <section id="quiz-container" class="hidden">
+            <div class="progress-bar"><div id="progress"></div></div>
+            <div id="question-box">
+                <h2 id="question-text">Question Load...</h2>
+                <div id="answer-options"></div>
             </div>
         </section>
 
-    </div>
+        <section id="result-container" class="hidden">
+            <h2>Your Bio-Score: <span id="score-num" class="glow-text">0</span>/100</h2>
+            <p id="result-msg"></p>
+            <a href="program.html" class="btn-main pulse">Join the 30 Day Eat For Your Organs Challenge</a>
+        </section>
+    </main>
 
-    <script>
-        const questions = [
-            { q: "Milyen gyakran eszel zöldséget?", a: [["Minden nap", 17], ["Hetente párszor", 8], ["Ritkán", 0]] },
-            { q: "Mennyi cukrot fogyasztasz?", a: [["Keveset", 17], ["Mérsékelten", 8], ["Sokat", 0]] },
-            { q: "Milyen az alvásod minősége?", a: [["Kiváló", 17], ["Átlagos", 8], ["Rossz", 0]] },
-            { q: "Milyen gyakran edzel?", a: [["Heti 3+", 17], ["Néha", 8], ["Ritkán", 0]] },
-            { q: "Mennyi koffeint iszol?", a: [["0-1 adag", 16], ["2-3 adag", 8], ["Többet", 0]] },
-            { q: "Fogyasztasz feldolgozott ételt?", a: [["Ritkán", 16], ["Néha", 8], ["Gyakran", 0]] }
-        ];
-
-        let current = 0;
-        let score = 0;
-
-        function startQuiz() {
-            document.getElementById('hero').classList.remove('active');
-            document.getElementById('quiz-section').classList.add('active');
-            loadQuestion();
-        }
-
-        function loadQuestion() {
-            const q = questions[current];
-            document.getElementById('question-text').innerText = q.q;
-            const optContainer = document.getElementById('options');
-            optContainer.innerHTML = '';
-            document.getElementById('progress').style.width = (current / questions.length * 100) + '%';
-
-            q.a.forEach(opt => {
-                const b = document.createElement('button');
-                b.className = 'option-btn';
-                b.innerText = opt[0];
-                b.onclick = () => next(opt[1]);
-                optContainer.appendChild(b);
-            });
-        }
-
-        function next(pts) {
-            score += pts;
-            current++;
-            if(current < questions.length) loadQuestion();
-            else showResults();
-        }
-
-        function showResults() {
-            document.getElementById('quiz-section').classList.remove('active');
-            document.getElementById('results').classList.add('active');
-            document.getElementById('score-display').innerText = score;
-            
-            let msg = "";
-            if(score >= 80) msg = "A tested kiválóan működik. Támogasd továbbra is az idegrendszered!";
-            else if(score >= 50) msg = "A rendszereid működnek, de némi stressz alatt állnak.";
-            else msg = "A tested jelentős életmódbeli stressznek van kitéve.";
-            document.getElementById('result-msg').innerText = msg;
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
